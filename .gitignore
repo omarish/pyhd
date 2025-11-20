@@ -1,0 +1,21 @@
+# OS
+## AppleDouble files (resource forks, extended attributes when copying to non-Mac filesystems)
+._*
+## Finder metadata
+.DS_Store
+## Folder customization settings
+desktop.ini
+## Shortcut files
+*.lnk
+
+
+# TEMPORARY FILES
+*.bak     # Backup files (many editors create these when saving)
+*.sw[op]  # Vim swap files (*.swo, *.swp) created during editing sessions
+*#        # Emacs autosave files (file ends with #)
+*~        # Backup files with tilde suffix (used by various editors like Emacs, gedit, nano)
+
+
+# PYTHON
+__pycache__/
+.venv/

@@ -1,0 +1,32 @@
+[project]
+name = "pyhd"
+description = "Python library for Human Design – BodyGraph calculations and analysis."
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [{name = "Pascal Polleunus"}]
+keywords = ["human-design", "bodygraph", "i-ching", "astrology", "kabbalah", "chakra"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+]
+dynamic = ["version"]
+
+
+# DEPENDENCIES =====================================================================================
+
+requires-python = ">=3.10"
+
+dependencies = [
+    "pyswisseph",
+]
+
+
+# PROJECT ==========================================================================================
+
+[project.urls]
+Source = "https://github.com/ppo/pyhd"
+"Bug Reports" = "https://github.com/ppo/pyhd/issues"

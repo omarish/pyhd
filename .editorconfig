@@ -1,0 +1,29 @@
+# Define coding styles for editors.
+#
+# Doc: https://editorconfig.org/#file-format-details
+# Ref: https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties
+
+
+# Stop looking for other `.editorconfig` files in parent folders.
+root = true
+
+
+# DEFAULT VALUES
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+max_line_length = 100
+trim_trailing_whitespace = true
+
+
+# DIFF FILES
+[*.{diff,patch}]
+indent_size = 4
+trim_trailing_whitespace = false
+
+# MARKDOWN
+[*.md]
+trim_trailing_whitespace = false
