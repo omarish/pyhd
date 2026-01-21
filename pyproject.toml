@@ -28,5 +28,9 @@ dependencies = [
 # PROJECT ==========================================================================================
 
 [project.urls]
+Homepage = "https://pyhd.readthedocs.io/"
 Source = "https://github.com/ppo/pyhd"
 "Bug Reports" = "https://github.com/ppo/pyhd/issues"
+
+[project.scripts]
+pyhd = "pyhd.cli:main"  # CLI entry point.
