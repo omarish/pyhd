@@ -38,6 +38,7 @@ from .constants import (
     Signatures,
     Strategies,
     Types,
+    VariableCells,
     VariableOrientations,
 )
 from .imprint import Imprint
@@ -491,17 +492,17 @@ class Chart:
         See `VARIABLE_ORIENTATIONS`.
         """
         return {
-            "pt": self.personality[Planets.SUN],
-            "pb": self.personality[Planets.NORTH_NODE],
-            "dt": self.design[Planets.SUN],
-            "db": self.design[Planets.NORTH_NODE],
+            VariableCells.PT: self.personality[Planets.SUN],
+            VariableCells.PB: self.personality[Planets.NORTH_NODE],
+            VariableCells.DT: self.design[Planets.SUN],
+            VariableCells.DB: self.design[Planets.NORTH_NODE],
         }
         # TODO: Is this really better?
         # return {
-        #     "pt": self._imprints[Motivations.get_imprint()][Motivations.get_planet()],
-        #     "pb": self._imprints[Perspectives.get_imprint()][Perspectives.get_planet()],
-        #     "dt": self._imprints[Determinations.get_imprint()][Determinations.get_planet()],
-        #     "db": self._imprints[Environments.get_imprint()][Environments.get_planet()],
+        #     VariableCells.PT: self._imprints[Motivations.get_imprint()][Motivations.get_planet()],
+        #     VariableCells.PB: self._imprints[Perspectives.get_imprint()][Perspectives.get_planet()],
+        #     VariableCells.DT: self._imprints[Determinations.get_imprint()][Determinations.get_planet()],
+        #     VariableCells.DB: self._imprints[Environments.get_imprint()][Environments.get_planet()],
         # }
 
     @property
@@ -519,7 +520,7 @@ class Chart:
     @property
     def determination(self) -> Determinations:
         """Return the Determination (Design Sun Color, top-left Variable)."""
-        activation = self.variable_activations["dt"]
+        activation = self.variable_activations[VariableCells.DT]
         return Determinations.get_by_color_tone(activation.color, activation.tone)
 
     @property
@@ -527,13 +528,13 @@ class Chart:
         """Return the Cognition (Design Sun Tone, top-left Variable)."""
         # TODO
         # tone = self.design[PLANETS.SUN].tone
-        tone = self.variable_activations["dt"].tone
+        tone = self.variable_activations[VariableCells.DT].tone
         return Cognitions(tone.num)
 
     @property
     def environment(self) -> Environments:
         """Return the Environment (Design North Node Color, bottom-left Variable)."""
-        activation = self.variable_activations["db"]
+        activation = self.variable_activations[VariableCells.DB]
         return Environments.get_by_color_tone(activation.color, activation.tone)
 
     @property
@@ -541,7 +542,7 @@ class Chart:
         """Return the Perspective (Personality North Node Color, bottom-right Variable)."""
         # TODO
         # color = self.personality[PLANETS.NORTH_NODE].color
-        color = self.variable_activations["pb"].color
+        color = self.variable_activations[VariableCells.PB].color
         return Perspectives(color.num)
 
     @property
@@ -549,7 +550,7 @@ class Chart:
         """Return the Motivation (Personality Sun Color, top-right Variable)."""
         # TODO
         # color = self.personality[PLANETS.SUN].color
-        color = self.variable_activations["pt"].color
+        color = self.variable_activations[VariableCells.PT].color
         return Motivations(color.num)
 
     @property
@@ -557,7 +558,7 @@ class Chart:
         """Return the Sense (Personality Sun Tone, top-right Variable)."""
         # TODO
         # tone = self.personality[PLANETS.SUN].tone
-        tone = self.variable_activations["pt"].tone
+        tone = self.variable_activations[VariableCells.PT].tone
         return Senses(tone.num)
 
     # BOOL TESTS -----------------------------------------------------------------------------------
@@ -743,8 +744,8 @@ class Chart:
             arrow = ARROWS[self.variable_orientations.orientations[key]._key]
             variable_activations[key] = f"{arrow}  {a.color}.{a.tone}.{a.base}"
         table = [
-            [variable_activations["dt"], variable_activations["pt"]],
-            [variable_activations["db"], variable_activations["pb"]],
+            [variable_activations[VariableCells.DT], variable_activations[VariableCells.PT]],
+            [variable_activations[VariableCells.DB], variable_activations[VariableCells.PB]],
         ]
         print_table(table, header_rows=0, header_cols=0, formats=[">w", ">w"])
 

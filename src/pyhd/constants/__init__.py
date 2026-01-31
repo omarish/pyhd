@@ -117,6 +117,7 @@ References:
 # Bases                     | SuperEnum    | The 5 Bases.
 #
 # Orientations              | SuperEnum    | The 2 Orientations for Variables.
+# VariableCells             | SuperEnum    | The 4 cells in the Variable Orientations table.
 # VariableOrientations      | SuperEnum    | The 16 Variable Orientations.
 #
 # VariableEnum              | Base Class   | Base `SuperEnum` for the concrete Variables.
@@ -1439,7 +1440,7 @@ class Bases(SuperEnum):
     _5         = "Personality",    "Space/Illusion",  "Subjective",   "Who",    "Hearing",   "Mutation",        "Presence: 'I Think'",     "Communication",                    "Space"
 
 
-# ORIENTATIONS -------------------------------------------------------------------------------------
+# VARIABLE ORIENTATIONS ----------------------------------------------------------------------------
 
 class Orientations(SuperEnum):
     """The 2 Orientations for Variables."""
@@ -1458,7 +1459,25 @@ class Orientations(SuperEnum):
                 else cls.RIGHT)
 
 
-# VARIABLE ORIENTATIONS ----------------------------------------------------------------------------
+class VariableCells(SuperEnum):
+    """The 4 cells in the Variables table."""
+    PT = "Personality Top"     # Sun
+    PB = "Personality Bottom"  # North Node
+    DT = "Design Top"          # Sun
+    DB = "Design Bottom"       # North Node
+
+    @property
+    def initials(self) -> str:
+        """Return the initials representing the cell (lowercase)."""
+        return self._key.lower()
+
+    @classmethod
+    def get(cls, imprint: Imprints, row: str) -> "VariableCells":
+        """Return the cell based on an imprint and row (top or bottom)."""
+        if row.lower() not in ("top", "bottom"):
+            raise KeyError(f"Invalid row '{row}' (must be 'top' or 'bottom').")
+        return self(f"{imprint[0]}{row}".upper())
+
 
 class VariableOrientations(SuperEnum):
     """The 16 Variable Orientations.
@@ -1474,23 +1493,23 @@ class VariableOrientations(SuperEnum):
     - "The Definitive Book of Human Design" p37.
     - TODO: "Colors in Human Design" p.
     """
-    __FIELDS__ = "pt",                "pb",                "dt",                "db"
-    PLL_DLL    = Orientations.LEFT,   Orientations.LEFT,   Orientations.LEFT,   Orientations.LEFT
-    PLL_DLR    = Orientations.LEFT,   Orientations.LEFT,   Orientations.LEFT,   Orientations.RIGHT
-    PLL_DRL    = Orientations.LEFT,   Orientations.LEFT,   Orientations.RIGHT,  Orientations.LEFT
-    PLL_DRR    = Orientations.LEFT,   Orientations.LEFT,   Orientations.RIGHT,  Orientations.RIGHT
-    PLR_DLL    = Orientations.LEFT,   Orientations.RIGHT,  Orientations.LEFT,   Orientations.LEFT
-    PLR_DLR    = Orientations.LEFT,   Orientations.RIGHT,  Orientations.LEFT,   Orientations.RIGHT
-    PLR_DRL    = Orientations.LEFT,   Orientations.RIGHT,  Orientations.RIGHT,  Orientations.LEFT
-    PLR_DRR    = Orientations.LEFT,   Orientations.RIGHT,  Orientations.RIGHT,  Orientations.RIGHT
-    PRL_DLL    = Orientations.RIGHT,  Orientations.LEFT,   Orientations.LEFT,   Orientations.LEFT
-    PRL_DLR    = Orientations.RIGHT,  Orientations.LEFT,   Orientations.LEFT,   Orientations.RIGHT
-    PRL_DRL    = Orientations.RIGHT,  Orientations.LEFT,   Orientations.RIGHT,  Orientations.LEFT
-    PRL_DRR    = Orientations.RIGHT,  Orientations.LEFT,   Orientations.RIGHT,  Orientations.RIGHT
-    PRR_DLL    = Orientations.RIGHT,  Orientations.RIGHT,  Orientations.LEFT,   Orientations.LEFT
-    PRR_DLR    = Orientations.RIGHT,  Orientations.RIGHT,  Orientations.LEFT,   Orientations.RIGHT
-    PRR_DRL    = Orientations.RIGHT,  Orientations.RIGHT,  Orientations.RIGHT,  Orientations.LEFT
-    PRR_DRR    = Orientations.RIGHT,  Orientations.RIGHT,  Orientations.RIGHT,  Orientations.RIGHT
+    __FIELDS__ = VariableCells.PT.initials,  VariableCells.PB.initials,  VariableCells.DT.initials,  VariableCells.DB.initials
+    PLL_DLL    = Orientations.LEFT,          Orientations.LEFT,          Orientations.LEFT,          Orientations.LEFT
+    PLL_DLR    = Orientations.LEFT,          Orientations.LEFT,          Orientations.LEFT,          Orientations.RIGHT
+    PLL_DRL    = Orientations.LEFT,          Orientations.LEFT,          Orientations.RIGHT,         Orientations.LEFT
+    PLL_DRR    = Orientations.LEFT,          Orientations.LEFT,          Orientations.RIGHT,         Orientations.RIGHT
+    PLR_DLL    = Orientations.LEFT,          Orientations.RIGHT,         Orientations.LEFT,          Orientations.LEFT
+    PLR_DLR    = Orientations.LEFT,          Orientations.RIGHT,         Orientations.LEFT,          Orientations.RIGHT
+    PLR_DRL    = Orientations.LEFT,          Orientations.RIGHT,         Orientations.RIGHT,         Orientations.LEFT
+    PLR_DRR    = Orientations.LEFT,          Orientations.RIGHT,         Orientations.RIGHT,         Orientations.RIGHT
+    PRL_DLL    = Orientations.RIGHT,         Orientations.LEFT,          Orientations.LEFT,          Orientations.LEFT
+    PRL_DLR    = Orientations.RIGHT,         Orientations.LEFT,          Orientations.LEFT,          Orientations.RIGHT
+    PRL_DRL    = Orientations.RIGHT,         Orientations.LEFT,          Orientations.RIGHT,         Orientations.LEFT
+    PRL_DRR    = Orientations.RIGHT,         Orientations.LEFT,          Orientations.RIGHT,         Orientations.RIGHT
+    PRR_DLL    = Orientations.RIGHT,         Orientations.RIGHT,         Orientations.LEFT,          Orientations.LEFT
+    PRR_DLR    = Orientations.RIGHT,         Orientations.RIGHT,         Orientations.LEFT,          Orientations.RIGHT
+    PRR_DRL    = Orientations.RIGHT,         Orientations.RIGHT,         Orientations.RIGHT,         Orientations.LEFT
+    PRR_DRR    = Orientations.RIGHT,         Orientations.RIGHT,         Orientations.RIGHT,         Orientations.RIGHT
 
     @property
     def _name(self) -> str:
@@ -1501,10 +1520,10 @@ class VariableOrientations(SuperEnum):
     def orientations(self) -> dict[str, Orientations]:
         """Return the Orientation of the 4 Variables."""
         return {
-            "pt": self.pt,  # Motivation
-            "pb": self.pb,  # Perspective
-            "dt": self.dt,  # Determination
-            "db": self.db,  # Environment
+            VariableCells.PT: self.pt,  # Motivation
+            VariableCells.PB: self.pb,  # Perspective
+            VariableCells.DT: self.dt,  # Determination
+            VariableCells.DB: self.db,  # Environment
         }
 
     @classmethod
