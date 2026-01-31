@@ -593,7 +593,7 @@ class Chart:
             return False
 
         # Find which Definition contains the Center.
-        for definition in self.definitions():
+        for definition in self.definitions:
             if center in definition:
                 # Check if any target Center is in the same Definition.
                 return any((target in definition) for target in targets)
@@ -732,15 +732,15 @@ class Chart:
         print_h2("Activations:")
         print_table(table, formats=[None, ">w", ">w"])
 
-        # Variables.
+        # Variable Orientations.
         print()
-        print_h2("Variables:", end=" ")
-        print_value(self.variables)
+        print_h2("Variable Orientations:", end=" ")
+        print_value(self.variable_orientations)
 
         # Variables: Activations.
         variable_activations = {}
         for key, a in self.variable_activations.items():
-            arrow = ARROWS[self.variable_orientations[key]._key]
+            arrow = ARROWS[self.variable_orientations.orientations[key]._key]
             variable_activations[key] = f"{arrow}  {a.color}.{a.tone}.{a.base}"
         table = [
             [variable_activations["dt"], variable_activations["pt"]],

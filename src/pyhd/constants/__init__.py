@@ -1495,7 +1495,7 @@ class VariableOrientations(SuperEnum):
     @property
     def _name(self) -> str:
         """Return the name as `P<Top><Bottom> D<Top><Bottom>`."""
-        return self.format_key(*self.orientations).replace("_", " ")
+        return self.format_key(*self.orientations.values()).replace("_", " ")
 
     @property
     def orientations(self) -> dict[str, Orientations]:
