@@ -11,6 +11,29 @@ This library uses (a [Python extension](https://github.com/astrorigin/pyswisseph
 calculations.
 
 
+## Installation
+
+This project uses [uv](https://github.com/astral-sh/uv) for dependency management.
+
+```bash
+uv sync
+```
+
+## Usage
+
+You can run the CLI using `uv run`:
+
+```bash
+uv run pyhd "1987-04-12 14:00"
+```
+
+You can also specify a location to use local time:
+
+```bash
+uv run pyhd "1987-04-12 14:00" --location "New York, NY"
+```
+
+
 ## License
 
 Distributed under the terms of the [MIT license][LICENSE], PyHD is free and open source software.

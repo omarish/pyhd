@@ -1,3 +1,7 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "pyhd"
 description = "Python library for Human Design – BodyGraph calculations and analysis."
@@ -21,7 +25,9 @@ dynamic = ["version"]
 requires-python = ">=3.10"
 
 dependencies = [
+    "geopy>=2.4.1",
     "pyswisseph",
+    "timezonefinder>=8.2.0",
 ]
 
 
@@ -34,3 +40,7 @@ Source = "https://github.com/ppo/pyhd"
 
 [project.scripts]
 pyhd = "pyhd.cli:main"  # CLI entry point.
+
+[tool.hatch.version]
+path = "src/pyhd/__init__.py"
+
